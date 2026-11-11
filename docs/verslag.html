@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Verslag Portfolio Website</title>
+<style>
+@page { size: A4; margin: 15mm 17mm 14mm; }
+* { box-sizing: border-box; }
+body { margin: 0; color: #17211e; font-family: "Segoe UI", Arial, sans-serif; font-size: 9.2pt; line-height: 1.42; }
+.header { display: flex; align-items: flex-end; justify-content: space-between; gap: 10mm; padding-bottom: 4mm; border-bottom: 2px solid #1d4b40; }
+.mark { color: #1d4b40; font-size: 12pt; font-weight: 800; letter-spacing: -0.03em; }
+h1 { margin: 2mm 0 0; font-family: Georgia, serif; font-size: 23pt; font-weight: 500; line-height: 1.02; letter-spacing: -0.04em; }
+h1 em { color: #d95d2b; }
+.header-meta { text-align: right; color: #5b6660; font-size: 8pt; line-height: 1.55; }
+.header-meta strong { color: #17211e; }
+.meta { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 4mm; margin: 4mm 0 5mm; }
+.meta div { padding-top: 2mm; border-top: 1px solid #d8cfbf; }
+.meta span { display: block; color: #7a857f; font-size: 6.8pt; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.meta strong { display: block; margin-top: 0.5mm; font-size: 8.5pt; }
+h2 { margin: 4mm 0 1.5mm; padding-left: 2.5mm; border-left: 1mm solid #d95d2b; font-size: 10.5pt; letter-spacing: -0.01em; }
+p { margin: 0 0 1.8mm; color: #36423d; }
+ul { margin: 0 0 2mm; padding-left: 4.5mm; }
+li { margin-bottom: 0.9mm; }
+.problems { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 6mm; }
+.problem { padding: 2.5mm 3mm; background: #f8f3e9; border: 1px solid #e2d9c9; border-radius: 1.5mm; }
+.problem h3 { margin: 0 0 1mm; font-size: 8.8pt; }
+.problem p { margin: 0; font-size: 8.4pt; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.conclusion { margin-top: 3mm; padding: 3mm 4mm; background: #eef3e9; border-left: 1mm solid #1d4b40; }
+.conclusion p { margin: 0; }
+.footer { margin-top: 4mm; padding-top: 2mm; border-top: 1px solid #d8cfbf; color: #8a938d; font-size: 7pt; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="header">
+<div>
+<p class="mark">Rayan.</p>
+<h1>Portfolio op een<br><em>lokale webserver.</em></h1>
+</div>
+<div class="header-meta">
+<strong>Verslag · Hoofdstuk 3</strong><br>
+HTML &amp; CSS Tutorial<br>
+ROC Midden Nederland<br>
+November 2026
+</div>
+</div>
+
+<div class="meta">
+<div><span>Project</span><strong>Portfolio website</strong></div>
+<div><span>Omgeving</span><strong>XAMPP · Apache 2.4</strong></div>
+<div><span>Adres</span><strong>localhost/portfolio</strong></div>
+</div>
+
+<h2>Wat ik heb gebouwd</h2>
+<p>Ik heb een portfolio website gemaakt met drie pagina's: Home, Over mij en Contact. De site is volledig met de hand geschreven in HTML en CSS en draait op de lokale Apache-server van XAMPP. De bestanden staan in <strong>htdocs/portfolio/</strong> en zijn bereikbaar via <strong>http://localhost/portfolio/</strong>.</p>
+<p>De website heeft een responsive design, een eigen favicon, een actieve navigatie en een consistente donkere stijl. Op de homepage staan uitgelichte projecten en een korte introductie. De pagina Over mij bevat mijn achtergrond, skills, interesses en een tijdlijn. Op de contactpagina staan een formulier, contactgegevens en veelgestelde vragen.</p>
+
+<h2>Gebruikte Apache-features</h2>
+<ul>
+<li><strong>DocumentRoot / htdocs:</strong> de website wordt via <strong>http://localhost/portfolio/</strong> geserveerd.</li>
+<li><strong>.htaccess:</strong> toegang tot het .htaccess-bestand zelf en andere verborgen bestanden wordt geblokkeerd met <strong>Require all denied</strong>.</li>
+<li><strong>ErrorDocument 404:</strong> bezoekers krijgen een eigen foutpagina in plaats van de standaardpagina van Apache.</li>
+<li><strong>Options -Indexes:</strong> directory listing is uitgeschakeld, zodat mappen zonder indexbestand niet zichtbaar zijn.</li>
+<li><strong>Beveiligingsheaders:</strong> via <strong>mod_headers</strong> zijn X-Content-Type-Options, X-Frame-Options en Referrer-Policy ingesteld.</li>
+<li><strong>Bestandstypen blokkeren:</strong> bestanden zoals .md, .log, .bak, .ini en .conf zijn niet via de browser bereikbaar.</li>
+</ul>
+
+<h2>Problemen en oplossingen</h2>
+<div class="problems">
+<div class="problem">
+<h3>1. De 404-pagina verwees naar de verkeerde map</h3>
+<p>Mijn eerste ErrorDocument-regel verwees naar /404.html. Daardoor zocht Apache in de hoofdmap van htdocs in plaats van in de portfolio-map. Opgelost door /portfolio/404.html te gebruiken.</p>
+</div>
+<div class="problem">
+<h3>2. De stylesheet werkte niet op de 404-pagina</h3>
+<p>Omdat de foutpagina vanuit een andere URL wordt geladen, werkten relatieve paden naar de CSS niet betrouwbaar. De stylesheet en afbeeldingen zijn nu met een absoluut pad gekoppeld.</p>
+</div>
+<div class="problem">
+<h3>3. Controleren of .htaccess echt werkte</h3>
+<p>Een custom foutpagina kan ook verschijnen zonder goede regel. Daarom heb ik apart getest of het .htaccess-bestand via HTTP een 403 Forbidden geeft. Dat was het geval.</p>
+</div>
+<div class="problem">
+<h3>4. Testen via localhost in plaats van het bestand openen</h3>
+<p>Als je een HTML-bestand direct opent, worden Apache-regels niet uitgevoerd. Ik ben de site daarom altijd via http://localhost/portfolio/ blijven testen.</p>
+</div>
+</div>
+
+<h2>Bonus en conclusie</h2>
+<div class="conclusion">
+<p>Ik heb drie bonusonderdelen toegevoegd: een responsive design voor mobiel en tablet, een eigen favicon en een custom 404-pagina. De site gebruikt geen framework of externe bibliotheek; alle vormgeving komt uit één eigen CSS-bestand. Met dit project heb ik geleerd hoe Apache bestanden serveert, hoe je met .htaccess beveiliging en foutafhandeling regelt en waarom testen via een echte webserver anders is dan een bestand lokaal openen.</p>
+</div>
+
+<div class="footer">
+<span>Rayan · Software Development · Portfolio website</span>
+<span>Pagina 1 van 1</span>
+</div>
+</body>
+</html>

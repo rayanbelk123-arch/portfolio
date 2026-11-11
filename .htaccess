@@ -1,0 +1,21 @@
+Options -Indexes
+
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(md|log|bak|ini|conf)$">
+    Require all denied
+</FilesMatch>
+
+ErrorDocument 404 /portfolio/404.html
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
